@@ -1,0 +1,52 @@
+{
+	"push": {
+    	"name": "jpruskin/kali-2.0-x64"
+    },
+    "variables": {
+        "atlas_username": "{{env `ATLAS_USERNAME`}}",
+        "atlas_name": "{{env `ATLAS_NAME`}}"
+    },
+	"provisioners": [
+		{
+			"type": "shell",
+            "scripts": [
+                "scripts/base.sh",
+                "scripts/virtualbox.sh",
+                "scripts/vmware.sh",
+                "scripts/vagrant.sh",
+                "scripts/dep.sh",
+                "scripts/cleanup.sh",
+                "scripts/zerodisk.sh"
+            ],
+            "override": {
+                "vmware-iso": {
+                    "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'"
+                }
+            }
+		}
+	],
+	"builders": [
+		{
+			"type": "vmware-iso",
+			"boot_command": [
+				"<esc><esc><wait>",
+                "/install/vmlinuz noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+                "hostname={{ .Name }} "
+			],
+			"boot_wait": "15s",
+			"guest_os_type": "Debian-7-64",
+			"headless": "true",
+			"http_directory": "http",
+			"iso_checksum": "aaeb89a78f155377282f81a785aa1b38ee5f8ba0",
+			"iso_checksum_type": "sha1",
+			"iso_url": "http://cdimage.kali.org/kali-2.0/kali-linux-2.0-amd64.iso",
+			"skip_compaction": true,
+			"ssh_password": "vagrant",
+			"ssh_port": 22,
+			"ssh_username": "vagrant",
+			"ssh_wait_timeout": "10000s",
+			"tools_upload_flavor": "linux",
+			"version": "11"
+		}
+	]
+}
