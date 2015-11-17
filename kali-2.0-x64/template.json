@@ -1,6 +1,7 @@
 {
 	"push": {
-    	"name": "jpruskin/kali-2.0-x64"
+    	"name": "jpruskin/kali-2.0-x64",
+    	"vcs": true
     },
     "variables": {
         "atlas_username": "{{env `ATLAS_USERNAME`}}",
