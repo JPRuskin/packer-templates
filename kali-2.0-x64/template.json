@@ -30,13 +30,18 @@
 		{
 			"type": "vmware-iso",
 			"boot_command": [
-				"<esc><esc><wait>",
+                "<esc><wait>",
                 "/install/vmlinuz noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
-                "hostname={{ .Name }} "
+                "debian-installer=en_US auto locale=en_GB ",
+                "hostname={{ .Name }} domain=unassigned-domain ",
+                "fb=false debconf/frontend=noninteractive kbd-chooser/method=uk ",
+                "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=GB keyboard-configuration/variant=GB console-setup/ask_detect=false ",
+                "initrd=/install/initrd.gz -- <enter>",
+                "<wait10><enter>"
 			],
-			"boot_wait": "15s",
+			"boot_wait": "10s",
 			"guest_os_type": "debian7-64",
-			"headless": false,
+			"headless": true,
 			"http_directory": "http",
 			"iso_checksum": "aaeb89a78f155377282f81a785aa1b38ee5f8ba0",
 			"iso_checksum_type": "sha1",
